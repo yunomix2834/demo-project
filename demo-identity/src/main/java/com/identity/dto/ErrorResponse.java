@@ -3,11 +3,10 @@ package com.identity.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 )
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class ErrorResponse {
 
     @Schema(
@@ -39,5 +39,5 @@ public class ErrorResponse {
     @Schema(
             description = "Time representing when the error happened"
     )
-    LocalDateTime errorTime;
+    String errorTime;
 }

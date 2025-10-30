@@ -1,12 +1,23 @@
 package com.identity.configuration.security;
 
-import com.nimbusds.jwt.SignedJWT;
+import com.identity.dto.request.IntrospectRequest;
+import com.identity.dto.response.IntrospectResponse;
+import com.identity.exception.AppException;
+import com.identity.exception.ErrorCode;
+import com.identity.service.IAuthenticationService;
+import com.nimbusds.jose.JOSEException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.text.ParseException;
+import java.util.Objects;
 
 /**
  * JwtDecoder tùy chỉnh sử dụng thư viện Nimbus để phân tích và giải mã JWT.
@@ -24,27 +35,39 @@ import java.text.ParseException;
  */
 @Component
 public class CustomJwtDecoder implements JwtDecoder {
-  /**
-   * Giải mã chuỗi JWT và trả về đối tượng Jwt chứa thông tin claims.
-   *
-   * @param token chuỗi JWT đã được ký (không bao gồm tiền tố Bearer)
-   * @return đối tượng Jwt chứa token gốc, thời gian phát hành, hết hạn, header và claims
-   * @throws JwtException nếu token không hợp lệ hoặc không parse được
-   */
-  @Override
-  public Jwt decode(String token) throws JwtException {
-    try {
-      SignedJWT signedJWT = SignedJWT.parse(token);
 
-      return new Jwt(
-          token,
-          signedJWT.getJWTClaimsSet().getIssueTime().toInstant(),
-          signedJWT.getJWTClaimsSet().getExpirationTime().toInstant(),
-          signedJWT.getHeader().toJSONObject(),
-          signedJWT.getJWTClaimsSet().getClaims()
-      );
-    } catch (ParseException e) {
-      throw new JwtException("Invalid token");
+    @Value("${app.jwt.signerKey}")
+    private String signerKey;
+
+    @Autowired
+    private IAuthenticationService authenticationService;
+
+    private NimbusJwtDecoder nimbusJwtDecoder = null;
+
+    @Override
+    public Jwt decode(String token) throws JwtException {
+      try {
+          IntrospectResponse response = authenticationService.introspect(
+                  IntrospectRequest.builder()
+                          .token(token)
+                          .build());
+
+          if (!response.isValid()) {
+              throw new AppException(ErrorCode.INVALID_TOKEN);
+          }
+      } catch (JOSEException | ParseException e) {
+          throw new JwtException(e.getMessage());
+      }
+
+      if (Objects.isNull(nimbusJwtDecoder)) {
+          SecretKeySpec secretKeySpec =
+                  new SecretKeySpec(signerKey.getBytes(), "HS512");
+
+          nimbusJwtDecoder = NimbusJwtDecoder.withSecretKey(secretKeySpec)
+                  .macAlgorithm(MacAlgorithm.HS512)
+                  .build();
+      }
+
+      return nimbusJwtDecoder.decode(token);
     }
-  }
 }

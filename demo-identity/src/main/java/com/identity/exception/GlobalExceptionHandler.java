@@ -1,6 +1,6 @@
 package com.identity.exception;
 
-import com.demo.dto.ErrorResponse;
+import com.identity.dto.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     errorResponse.setMessage(errorCode.getMessage());
     errorResponse.setStatus(errorCode.getStatus());
     errorResponse.setApiPath(webRequest.getDescription(false));
-    errorResponse.setErrorTime(LocalDateTime.now());
+    errorResponse.setErrorTime(LocalDateTime.now().toString());
 
     return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     errorResponse.setMessage(errorCode.getMessage());
     errorResponse.setStatus(errorCode.getStatus());
     errorResponse.setApiPath(webRequest.getDescription(false));
-    errorResponse.setErrorTime(LocalDateTime.now());
+    errorResponse.setErrorTime(LocalDateTime.now().toString());
 
     return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
   }
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
         errorResponse.setMessage(errorCode.getMessage());
         errorResponse.setStatus(errorCode.getStatus());
         errorResponse.setApiPath(webRequest.getDescription(false));
-        errorResponse.setErrorTime(LocalDateTime.now());
+        errorResponse.setErrorTime(LocalDateTime.now().toString());
 
         return ResponseEntity.status(errorCode.getStatusCode())
                 .body(errorResponse);

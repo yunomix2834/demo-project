@@ -1,7 +1,7 @@
 package com.identity.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.identity.dto.ApiResponse;
+import com.identity.dto.ErrorResponse;
 import com.identity.exception.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Entry point tùy chỉnh cho Spring Security khi phát hiện yêu cầu không được xác thực.
@@ -52,15 +53,18 @@ public class JwtAuthenticationEntryPoint
     response.setStatus(errorCode.getStatusCode().value());
     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-    ApiResponse<?> apiResponse = ApiResponse.builder()
-        .code(errorCode.getCode())
-        .message(errorCode.getMessage())
-        .build();
+    ErrorResponse errorResponse = ErrorResponse.builder()
+            .code(errorCode.getCode())
+            .message(errorCode.getMessage())
+            .errorTime(LocalDateTime.now().toString())
+            .status(errorCode.getStatus())
+            .apiPath(request.getServletPath())
+            .build();
 
     ObjectMapper objectMapper = new ObjectMapper();
 
     response.getWriter()
-        .write(objectMapper.writeValueAsString(apiResponse));
+        .write(objectMapper.writeValueAsString(errorResponse));
     response.flushBuffer();
   }
 }

@@ -18,6 +18,10 @@ public class UserCreationRequest {
     @Schema(description = "Username of the User", example = "yunomix2834")
     String username;
 
+    @NotEmpty(message = "Email must not be a null or empty")
+    @Schema(description = "Email of the User", example = "yunomix2834@gmail.com")
+    String email;
+
     @NotEmpty(message = "Password must not be a null or empty")
     @Schema(description = "Password of the User", example = "yunomix2834@@@")
     String password;

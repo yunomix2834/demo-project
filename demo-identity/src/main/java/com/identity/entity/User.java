@@ -31,8 +31,8 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "user")
-@SQLDelete(sql = "UPDATE user " +
+@Table(name = "users")
+@SQLDelete(sql = "UPDATE users " +
         "SET deleted_by = ? , deleted_at = now() " +
         "WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
@@ -42,8 +42,13 @@ public class User extends AuditMetadata {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Column(name = "username", length = 100)
+    @Column(unique = true)
     String username;
+
+    @Column(unique = true)
+    String email;
+
+    String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

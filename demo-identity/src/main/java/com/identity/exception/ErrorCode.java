@@ -38,8 +38,7 @@ public enum ErrorCode {
       FORBIDDEN),
 
   // 404 - Not Found
-  HELLO_NOT_FOUND(404, NOT_FOUND_STATUS, "Không tìm thấy hello!",
-      NOT_FOUND),
+  USER_NOT_FOUND(404, NOT_FOUND_STATUS, "Không tìm thấy user", NOT_FOUND),
 
 
   // 409 - Conflict

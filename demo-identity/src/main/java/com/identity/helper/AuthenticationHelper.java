@@ -1,5 +1,7 @@
 package com.identity.helper;
 
+import com.identity.exception.AppException;
+import com.identity.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Tiện ích hỗ trợ lấy thông tin người dùng hiện đang đăng nhập
@@ -50,5 +53,14 @@ public class AuthenticationHelper {
         .filter(role -> role.startsWith("ROLE_"))
         .map(role -> role.substring("ROLE_".length()))
         .toList();
+    }
+
+    public static String extractToken(String header) {
+        return Optional.ofNullable(header)
+                .filter(h -> h.toLowerCase().startsWith("bearer "))
+                .map(h -> h.substring(7))
+                .orElseThrow(
+                        () -> new AppException(ErrorCode.INVALID_TOKEN)
+                );
     }
 }

@@ -96,3 +96,9 @@ resilience4j.ratelimiter:
       timeoutDuration: 1000
       limitRefreshPeriod: 5000
       limitForPeriod: 1
+
+app:
+  jwt:
+    signerKey: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"
+    valid-duration: 7200  # in second ~~ 2 ti?ng
+    refreshable-duration: 1209600 # ~~ 2 tu?n
