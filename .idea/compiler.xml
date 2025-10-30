@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="demo-eurekaserver" />
-        <module name="demo-gatewayserver" />
         <module name="demo-configserver" />
       </profile>
       <profile name="Annotation profile for demo-project" enabled="true">
@@ -27,13 +26,26 @@
         </processorPath>
         <module name="demo-project" />
       </profile>
+      <profile name="Annotation profile for demo-gatewayserver" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <option name="mapstruct.defaultComponentModel" value="spring" />
+        <option name="mapstruct.verbose" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
+        </processorPath>
+        <module name="demo-gatewayserver" />
+      </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="demo-configserver" options="-parameters" />
       <module name="demo-eurekaserver" options="-parameters" />
-      <module name="demo-gatewayserver" options="-parameters" />
+      <module name="demo-gatewayserver" options="-parameters --enable-preview -Amapstruct.defaultComponentModel=spring -Amapstruct.verbose=true" />
       <module name="demo-project" options="-parameters --enable-preview -Amapstruct.defaultComponentModel=spring -Amapstruct.verbose=true" />
     </option>
   </component>
