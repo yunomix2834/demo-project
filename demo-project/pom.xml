@@ -8,8 +8,8 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.demo</groupId>
 
+	<groupId>com.demo</groupId>
 	<artifactId>demo-project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo-project</name>
