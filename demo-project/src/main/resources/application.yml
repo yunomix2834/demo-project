@@ -25,6 +25,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import: "optional:configserver:http://localhost:8081/"
   cloud:
     openfeign:
       circuitbreaker:
@@ -49,6 +51,15 @@ management:
   info:
     env:
       enabled: true
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
 
 info:
   app:
