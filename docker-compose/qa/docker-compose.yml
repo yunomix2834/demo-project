@@ -46,6 +46,28 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "demoeurekaserver"
 
+  demo1:
+    image: "yunomix2834/demo1:d1"
+    container_name: demo1
+    ports:
+      - "8093:8093"
+    depends_on:
+      configserver:
+        condition: service_healthy
+      eurekaserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8093/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    environment:
+      SPRING_APPLICATION_NAME: "demo1"
+    extends:
+      file: qa-config.yml
+      service: microservice-eureka-config
+
   demo2:
     image: "yunomix2834/demo2:d1"
     container_name: demo2

@@ -1,10 +1,7 @@
 package com.identity.entity;
 
 import com.identity.entity.audit.AuditMetadata;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -24,23 +21,14 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "hello")
-@SQLDelete(sql = "UPDATE hello " +
+@Table(name = "role")
+@SQLDelete(sql = "UPDATE role " +
         "SET deleted_by = ? , deleted_at = now() " +
         "WHERE id = ?")
 @Where(clause = "deleted_at IS NULL")
-public class Hello extends AuditMetadata {
+public class Role extends AuditMetadata {
+  @Id
+  String name;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
-
-    @Column(name = "user_id")
-    String userId;
-
-    @Column(name = "title", length = 100)
-    String title;
-
-    @Column(name = "description", columnDefinition = "text")
-    String description;
+  String description;
 }

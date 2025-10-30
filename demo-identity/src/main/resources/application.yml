@@ -1,7 +1,5 @@
 server:
   port: 8093
-  servlet:
-    context-path: /demo1
 
 spring:
   application:
