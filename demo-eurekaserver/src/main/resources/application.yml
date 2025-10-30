@@ -2,7 +2,7 @@ spring:
   application:
     name: "demoeurekaserver"
   config:
-    import: "optional:configserver:http://localhost:8081/"
+    import: "optional:configserver:http://localhost:8091/"
 
 management:
   endpoints:

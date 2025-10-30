@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8094
   servlet:
     context-path: /demo2
 
@@ -26,7 +26,7 @@ spring:
       ddl-auto: update
     show-sql: true
   config:
-    import: "optional:configserver:http://localhost:8081/"
+    import: "optional:configserver:http://localhost:8091/"
   cloud:
     openfeign:
       circuitbreaker:
@@ -59,7 +59,7 @@ eureka:
     fetchRegistry: true
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://localhost:8080/eureka/
+      defaultZone: http://localhost:8090/eureka/
 
 info:
   app:
