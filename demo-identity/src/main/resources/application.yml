@@ -1,11 +1,11 @@
 server:
-  port: 8094
+  port: 8093
   servlet:
-    context-path: /demo2
+    context-path: /demo1
 
 spring:
   application:
-    name: "demo2"
+    name: "demo1"
   profiles:
     active: "dev"
   datasource:
@@ -13,10 +13,10 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: ''
-#    url: jdbc:postgresql://localhost:5431/identity_db
-#    username: postgres_identity
-#    password: dinhanst2832004
-#    driver-class-name: org.postgresql.Driver
+  #    url: jdbc:postgresql://localhost:5431/identity_db
+  #    username: postgres_identity
+  #    password: dinhanst2832004
+  #    driver-class-name: org.postgresql.Driver
   h2:
     console:
       enabled: true
@@ -63,8 +63,8 @@ eureka:
 
 info:
   app:
-    name: "demo2"
-    description: "Yunomi Xavia Demo Project 2"
+    name: "demo1"
+    description: "Yunomi Xavia Demo Project 1"
     version: "1.0.0"
 
 logging:
