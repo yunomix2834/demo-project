@@ -1,3 +1,8 @@
+# Add kubernetes-dashboard repository
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+# Deploy a Helm Release named "kubernetes-dashboard" using the kubernetes-dashboard chart
+helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+
 kubectl get deployments
 
 kubectl get services
@@ -27,3 +32,24 @@ kubectl rollout history deployment gatewayserver-deployment
 kubectl undo deployment gatewayserver-deployment --to-revision=1
 
 kubectl delete -f <yml>
+
+helm ls
+
+helm search hub wordpress
+
+helm repo add bitnami https://charts.bitnami.com/bitnami                                                     
+helm install happy-panda bitnami/wordpress
+
+export SERVICE_IP=$(kubectl get svc --namespace default happy-panda-wordpress --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
+echo "WordPress URL: http://$SERVICE_IP/"
+echo "WordPress Admin URL: http://$SERVICE_IP/admin"
+
+helm env
+
+helm uninstall happy-panda
+
+helm create eazybank-common
+
+helm dependencies build
+
+helm template . 
