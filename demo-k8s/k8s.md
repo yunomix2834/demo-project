@@ -53,3 +53,21 @@ helm create eazybank-common
 helm dependencies build
 
 helm template . 
+
+helm install keycloak keycloak
+
+kubectl get pvc
+
+kubectl delete pvc <pvc_name>
+
+kubectl port-forward svc/keycloak 8080:8080
+
+helm upgrade <name> <helm_chart_name>
+
+helm history <name>
+
+helm rollback <name> <revision_number>
+
+helm uninstall <name>
+
+helm template <name> <helm_chart_name>

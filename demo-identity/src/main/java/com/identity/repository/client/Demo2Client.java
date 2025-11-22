@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name="demo2", fallback = Demo2Fallback.class)
+@FeignClient(name="demo2", url = "http://demo2:8094",fallback = Demo2Fallback.class)
 
 public interface Demo2Client {
 

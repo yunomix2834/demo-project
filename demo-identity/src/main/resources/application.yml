@@ -26,6 +26,9 @@ spring:
   config:
     import: "optional:configserver:http://localhost:8091/"
   cloud:
+    kubernetes:
+      discovery:
+        all-namespaces: true
     openfeign:
       circuitbreaker:
         enabled: true
@@ -74,14 +77,14 @@ management:
     tags:
       application: ${spring.application.name}
 
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8090/eureka/
+#eureka:
+#  instance:
+#    preferIpAddress: true
+#  client:
+#    fetchRegistry: true
+#    registerWithEureka: true
+#    serviceUrl:
+#      defaultZone: http://localhost:8090/eureka/
 
 info:
   app:
